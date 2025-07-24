@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bo Dean's 2025 Growth Strategy</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom right, #e0f2fe, #dbeafe); /* Subtle blue gradient */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top for better scrolling */
+            min-height: 100vh;
+            padding: 1.25rem; /* 20px padding */
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+            padding: 2rem;
+            max-width: 900px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        @media (min-width: 768px) { /* Adjust padding for larger screens */
+            .container {
+                padding: 2.5rem;
+            }
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem; /* Increased margin */
+        }
+        .pillar-card {
+            background-color: #eff6ff; /* Lighter blue, closer to white */
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #bfdbfe; /* Light blue border */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Subtle initial shadow */
+        }
+        .pillar-card:hover {
+            background-color: #dbeafe; /* Even lighter blue on hover */
+            transform: translateY(-5px); /* More pronounced lift */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); /* Stronger shadow on hover */
+        }
+        .pillar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700; /* Bolder text */
+            color: #2563eb; /* Tailwind blue-600 */
+            font-size: 1.125rem; /* text-lg */
+        }
+        .pillar-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s ease-out, padding 0.7s ease-out; /* Slower transition */
+            padding-left: 0.75rem; /* Slightly more indent */
+            padding-right: 0.75rem;
+            color: #374151; /* Darker gray for content text */
+        }
+        .pillar-content.expanded {
+            max-height: 1000px; /* Increased max-height to accommodate more content */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        .arrow {
+            transition: transform 0.3s ease;
+        }
+        .arrow.rotated {
+            transform: rotate(90deg);
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .kpi-section {
+            background-color: #ecfdf5; /* Light green */
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border: 1px solid #a7f3d0; /* Light green border */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        .kpi-section h3 {
+            color: #059669; /* Tailwind emerald-600 */
+        }
+        .growth-projection {
+            background-color: #fffbeb; /* Light yellow */
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border: 1px solid #fde68a; /* Light yellow border */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        .growth-projection h3 {
+            color: #d97706; /* Tailwind amber-600 */
+        }
+        .text-strong {
+            font-weight: 600; /* Semi-bold for emphasis */
+            color: #1f2937; /* Darker text for strong elements */
+        }
+        .list-disc li strong {
+            font-weight: 600; /* Ensure bolding within lists */
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            border-radius: 1rem;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .modal-overlay.open .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+        .close-button:hover {
+            color: #1f2937;
+        }
+        .llm-button {
+            background-color: #fcd34d; /* Tailwind amber-300 */
+            color: #78350f; /* Tailwind amber-900 */
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .llm-button:hover {
+            background-color: #fbbf24; /* Tailwind amber-400 */
+            transform: translateY(-2px);
+        }
+        .llm-button:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+        .llm-button svg {
+            margin-right: 0.5rem;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #2563eb; /* Blue spinner */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            margin-left: 0.75rem;
+            display: inline-block;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container">
+        <header class="header">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Bo Dean's 2025 Growth Strategy</h1>
+            <p class="text-base md:text-lg text-gray-600">Elevating from St. Louis staple to nationally recognized indie artist.</p>
+        </header>
+
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4">Strategic Pillars</h2>
+
+            <!-- Pillar 1: Live Performances -->
+            <div class="pillar-card" onclick="togglePillar('pillar1')">
+                <div class="pillar-header">
+                    <span>1. Expand Live Performances Beyond the Midwest</span>
+                    <svg class="arrow w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+                <div id="pillar1-content" class="pillar-content text-gray-700">
+                    <p class="font-semibold mt-2">Objective:</p>
+                    <ul class="list-disc ml-6">
+                        <li>Increase exposure to new audiences and build national reputation.</li>
+                    </ul>
+                    <p class="font-semibold mt-2">Key Actions:</p>
+                    <ul class="list-disc ml-6">
+                        <li>Book performances at major hip-hop festivals (Atlanta, Houston, Chicago, SXSW).</li>
+                        <li>Open for mid-tier artists on national tours.</li>
+                        <li>Target college campuses for shows blending music and motivational talks.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Pillar 2: Digital Platforms & Content -->
+            <div class="pillar-card" onclick="togglePillar('pillar2')">
+                <div class="pillar-header">
+                    <span>2. Enhance Digital Platforms & Content Strategy</span>
+                    <svg class="arrow w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+                <div id="pillar2-content" class="pillar-content text-gray-700">
+                    <p class="font-semibold mt-2">Objective:</p>
+                    <ul class="list-disc ml-6">
+                        <li>Maximize online discoverability, engagement, and fan acquisition.</li>
+                    </ul>
+                    <p class="font-semibold mt-2">Key Actions (YouTube):</p>
+                    <ul class="list-disc ml-6">
+                        <li>Develop a content calendar with weekly uploads (music videos, vlogs, freestyles, studio sessions).</li>
+                        <li>Create educational content (lyric-writing tips, hip-hop history).</li>
+                        <li>Optimize video metadata for searchability.</li>
+                        <li><strong class="text-strong">Growth Projection:</strong> 3,000-5,000 subscribers by end of 2025; 5,000+ views per new music video.</li>
+                    </ul>
+                    <p class="font-semibold mt-2">Key Actions (TikTok):</p>
+                    <ul class="list-disc ml-6">
+                        <li>Post 15-30 second clips of live performances, studio freestyles, behind-the-scenes.</li>
+                        <li>Join trending challenges with a unique twist.</li>
+                        <li>Collaborate with TikTok creators.</li>
+                        <li><strong class="text-strong">Growth Projection:</strong> 2,000-5,000 followers by end of 2025; 10,000+ views per trending clip.</li>
+                    </ul>
+                    <p class="font-semibold mt-2">Key Actions (Spotify Playlisting):</p>
+                    <ul class="list-disc ml-6">
+                        <li><strong>Pre-Release:</strong> Schedule 2-4 weeks in advance, optimize assets, build hype.</li>
+                        <li><strong>Profile Optimization:</strong> Update bio/photos, use "Artist Pick," upload Canvas visuals.</li>
+                        <li><strong>Editorial Pitching:</strong> Submit via Spotify for Artists, craft compelling pitches.</li>
+                        <li><strong>Algorithmic Triggering:</strong> Drive early engagement (2,500+ streams, 375+ saves in 2-3 weeks).</li>
+                        <li><strong>User-Curated Playlists:</strong> Research and pitch to independent curators.</li>
+                        <li><strong>Marketing Amplification:</strong> Social media, TikTok/Reels, YouTube, community, local radio, ads.</li>
+                        <li><strong class="text-strong">Growth Projection:</strong> 5,000-10,000 monthly listeners by end of 2025; 15-25% growth in non-St. Louis streams.</li>
+                    </ul>
+                    <p class="font-semibold mt-2">Key Actions (Instagram):</p>
+                    <ul class="list-disc ml-6">
+                        <li>Use targeted hashtags and geotags.</li>
+                        <li>Host Instagram Live sessions.</li>
+                        <li>Run small-budget ads for key releases.</li>
+                        <li><strong class="text-strong">Growth Projection:</strong> 10,000-12,000 followers by end of 2025; 5-10% increase in engagement rate.</li>
+                    </ul>
+                    <button class="llm-button" onclick="openLLMModal('content_ideas')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                        Generate Content Ideas ✨
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pillar 3: Collaborations & Partnerships -->
+            <div class="pillar-card" onclick="togglePillar('pillar3')">
+                <div class="pillar-header">
+                    <span>3. Strategic Collaborations & Partnerships</span>
+                    <svg class="arrow w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+                <div id="pillar3-content" class="pillar-content text-gray-700">
+                    <p class="font-semibold mt-2">Objective:</p>
+                    <ul class="list-disc ml-6">
+                        <li>Leverage existing networks and unique identity for broader reach and credibility.</li>
+                    </ul>
+                    <p class="font-semibold mt-2">Key Actions (Artistic Collaborations):</p>
+                    <ul class="list-disc ml-6">
+                        <li>Partner with artists in nearby cities or national indie acts.</li>
+                        <li>Work with YouTubers or podcasters for content (cyphers, interviews).</li>
+                        <li>Leverage S.L.U.M. Fest network for rising Midwest talent.</li>
+                    </ul>
+                    <p class="font-semibold mt-2">Key Actions (Brand Partnerships):</p>
+                    <ul class="list-disc ml-6">
+                        <li>Pitch to St. Louis brands for sponsorships/merch collaborations.</li>
+                        <li>Seek educational partnerships (youth programs, school districts).</li>
+                        <li>Apply for grants/fellowships supporting artists with social impact.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Pillar 4: Media Outreach & Community -->
+            <div class="pillar-card" onclick="togglePillar('pillar4')">
+                <div class="pillar-header">
+                    <span>4. Media Outreach & Community Deepening</span>
+                    <svg class="arrow w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+                <div id="pillar4-content" class="pillar-content text-gray-700">
+                    <p class="font-semibold mt-2">Objective:</p>
+                    <ul class="list-disc ml-6">
+                        <li>Attract broader media attention and strengthen fan loyalty.</li>
+                    </ul>
+                    <p class="font-semibold mt-2">Key Actions (Media Outreach):</p>
+                    <ul class="list-disc ml-6">
+                        <li>Develop a press kit emphasizing unique narrative and recent wins.</li>
+                        <li>Pitch to national hip-hop outlets and podcasts.</li>
+                        <li>Tie pitches to current events or activism.</li>
+                    </ul>
+                    <p class="font-semibold mt-2">Key Actions (Community Engagement):</p>
+                    <ul class="list-disc ml-6">
+                        <li>Host music-and-education workshops for local youth.</li>
+                        <li>Organize a "FroNation Fest" in St. Louis.</li>
+                        <li>Partner with community groups on initiatives tied to music themes.</li>
+                    </ul>
+                    <button class="llm-button" onclick="openLLMModal('pitch_blurb')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                        Draft Pitch Blurb ✨
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pillar 5: Merch & Monetization -->
+            <div class="pillar-card" onclick="togglePillar('pillar5')">
+                <div class="pillar-header">
+                    <span>5. Optimize Merch & Monetization</span>
+                    <svg class="arrow w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+                <div id="pillar5-content" class="pillar-content text-gray-700">
+                    <p class="font-semibold mt-2">Objective:</p>
+                    <ul class="list-disc ml-6">
+                        <li>Diversify income streams beyond shows and streams.</li>
+                    </ul>
+                    <p class="font-semibold mt-2">Key Actions:</p>
+                    <ul class="list-disc ml-6">
+                        <li>Release limited-edition merch tied to albums.</li>
+                        <li>Offer exclusive content via Patreon or Bovember.com.</li>
+                        <li>Explore online courses on music or education topics.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Pillar 6: Data Tracking & Analysis -->
+            <div class="pillar-card" onclick="togglePillar('pillar6')">
+                <div class="pillar-header">
+                    <span>6. Data Tracking & Analysis (Ongoing)</span>
+                    <svg class="arrow w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </div>
+                <div id="pillar6-content" class="pillar-content text-gray-700">
+                    <p class="font-semibold mt-2">Objective:</p>
+                    <ul class="list-disc ml-6">
+                        <li>Refine strategy and measure success through data-driven insights.</li>
+                    </ul>
+                    <p class="font-semibold mt-2">Key Actions:</p>
+                    <ul class="list-disc ml-6">
+                        <li>Monitor follower growth, engagement rates, and video views monthly.</li>
+                        <li>Identify top-performing content and replicate successful strategies.</li>
+                        <li>Adjust content and promotional efforts based on performance data.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="growth-projection">
+            <h3 class="text-xl font-semibold mb-3">Realistic Growth Trend for 2025</h3>
+            <p class="text-gray-700 mb-2">Based on the outlined strategies, here's a realistic projection:</p>
+            <div class="mb-4">
+                <p class="font-semibold text-gray-800">Q3 2025 (July - September):</p>
+                <ul class="list-disc ml-6 text-gray-700">
+                    <li><strong class="text-strong">Focus:</strong> Initial push on YouTube revamp and TikTok, consistent Spotify pitching.</li>
+                    <li><strong class="text-strong">YouTube Subscribers:</strong> 1,200 - 1,500</li>
+                    <li><strong class="text-strong">TikTok Followers:</strong> 500 - 1,000</li>
+                    <li><strong class="text-strong">Spotify Monthly Listeners:</strong> 2,000 - 3,500 (slight increase non-St. Louis)</li>
+                    <li><strong class="text-strong">Instagram Followers:</strong> 9,000 - 9,500</li>
+                </ul>
+            </div>
+            <div>
+                <p class="font-semibold text-gray-800">Q4 2025 (October - December):</p>
+                <ul class="list-disc ml-6 text-gray-700">
+                    <li><strong class="text-strong">Focus:</strong> Leveraging digital momentum into collaborations and media outreach.</li>
+                    <li><strong class="text-strong">YouTube Subscribers:</strong> 1,800 - 2,500</li>
+                    <li><strong class="text-strong">TikTok Followers:</strong> 1,500 - 3,000</li>
+                    <li><strong class="text-strong">Spotify Monthly Listeners:</strong> 4,000 - 7,000 (more noticeable non-St. Louis growth)</li>
+                    <li><strong class="text-strong">Instagram Followers:</strong> 9,800 - 10,500</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="kpi-section">
+            <h3 class="text-xl font-semibold mb-3">Key Performance Indicators (KPIs) to Monitor</h3>
+            <ul class="list-disc ml-6 text-gray-700">
+                <li><strong class="text-strong">Audience Demographics:</strong> Track geographic distribution of Spotify listeners and social media followers.</li>
+                <li><strong class="text-strong">Engagement Rates:</strong> Likes, comments, shares, saves, watch time across platforms.</li>
+                <li><strong class="text-strong">Conversion Rates:</strong> Social media followers to Spotify listeners/merchandise buyers.</li>
+                <li><strong class="text-strong">Media Placements:</strong> Number of features in national hip-hop outlets or podcasts.</li>
+            </ul>
+        </section>
+
+        <section class="mt-8 text-gray-600 text-sm">
+            <h3 class="text-lg font-semibold text-gray-700 mb-2">Factors Influencing Growth:</h3>
+            <div class="flex flex-wrap -mx-2">
+                <div class="w-full md:w-1/2 px-2 mb-4">
+                    <p class="font-semibold text-green-700">Positive Influences:</p>
+                    <ul class="list-disc ml-6">
+                        <li>Consistent release of high-quality music.</li>
+                        <li>Successful viral content on TikTok/Reels.</li>
+                        <li>Major playlist placements.</li>
+                        <li>High-profile collaborations.</li>
+                        <li>Successful media placements highlighting unique narrative.</li>
+                        <li>Effective live performances in new markets.</li>
+                    </ul>
+                </div>
+                <div class="w-full md:w-1/2 px-2 mb-4">
+                    <p class="font-semibold text-red-700">Negative Influences:</p>
+                    <ul class="list-disc ml-6">
+                        <li>Inconsistent content output or lack of engagement.</li>
+                        <li>Failure to secure meaningful collaborations.</li>
+                        <li>Limited budget for targeted advertising.</li>
+                        <li>Lack of adaptation to platform algorithm changes.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- LLM Modal Structure -->
+    <div id="llmModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-button" onclick="closeLLMModal()">&times;</button>
+            <h3 id="modalTitle" class="text-2xl font-bold text-gray-800 mb-4"></h3>
+            <p id="modalDescription" class="text-gray-600 mb-4"></p>
+            <textarea id="llmInput" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" rows="4" placeholder="Enter details for the AI..."></textarea>
+            <button id="generateButton" class="llm-button w-full" onclick="generateLLMResponse()">
+                Generate <span id="generateType"></span>
+                <span id="loadingSpinner" class="loading-spinner hidden"></span>
+            </button>
+            <div id="llmResponse" class="mt-6 p-4 bg-gray-50 border border-gray-200 rounded-lg whitespace-pre-wrap text-gray-800 hidden"></div>
+        </div>
+    </div>
+
+    <script>
+        // Function to toggle pillar content visibility
+        function togglePillar(pillarId) {
+            const content = document.getElementById(pillarId + '-content');
+            const arrow = content.previousElementSibling.querySelector('.arrow');
+
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                arrow.classList.remove('rotated');
+            } else {
+                // Collapse all other pillars first
+                document.querySelectorAll('.pillar-content.expanded').forEach(item => {
+                    item.classList.remove('expanded');
+                    item.previousElementSibling.querySelector('.arrow').classList.remove('rotated');
+                });
+
+                // Expand the clicked pillar
+                content.classList.add('expanded');
+                arrow.classList.add('rotated');
+            }
+        }
+
+        // LLM Modal Functions
+        let currentLLMType = ''; // To keep track of which type of generation is requested
+
+        function openLLMModal(type) {
+            const modal = document.getElementById('llmModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            const llmInput = document.getElementById('llmInput');
+            const llmResponse = document.getElementById('llmResponse');
+            const generateTypeSpan = document.getElementById('generateType');
+
+            currentLLMType = type;
+            llmInput.value = ''; // Clear previous input
+            llmResponse.textContent = ''; // Clear previous response
+            llmResponse.classList.add('hidden'); // Hide response area
+
+            if (type === 'content_ideas') {
+                modalTitle.textContent = 'Generate Content Ideas ✨';
+                modalDescription.textContent = 'Tell me about the specific content type (e.g., YouTube vlog, TikTok challenge, Instagram Reel) and a theme or song, and I will suggest ideas for Bo Dean.';
+                generateTypeSpan.textContent = 'Ideas';
+                llmInput.placeholder = 'Example: "YouTube vlog about my creative process for a new song" or "TikTok challenge for a hype track"';
+            } else if (type === 'pitch_blurb') {
+                modalTitle.textContent = 'Draft Pitch Blurb ✨';
+                modalDescription.textContent = 'Provide details about the song (title, genre, mood, unique aspects, collaborators) and the target (e.g., Spotify editorial, specific blog, radio station), and I will draft a pitch blurb.';
+                generateTypeSpan.textContent = 'Blurb';
+                llmInput.placeholder = "Example: \"Song: 'Money Problems', Genre: Trap, Mood: Energetic, Unique: St. Louis sound, Target: Spotify editorial playlist\"";
+            }
+
+            modal.classList.add('open');
+        }
+
+        function closeLLMModal() {
+            document.getElementById('llmModal').classList.remove('open');
+        }
+
+        async function generateLLMResponse() {
+            const promptInput = document.getElementById('llmInput').value;
+            const llmResponseDiv = document.getElementById('llmResponse');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const generateButton = document.getElementById('generateButton');
+
+            if (!promptInput.trim()) {
+                llmResponseDiv.textContent = "Please enter some details to generate a response.";
+                llmResponseDiv.classList.remove('hidden');
+                return;
+            }
+
+            llmResponseDiv.textContent = '';
+            llmResponseDiv.classList.add('hidden');
+            loadingSpinner.classList.remove('hidden');
+            generateButton.disabled = true; // Disable button during generation
+
+            let prompt = "";
+            if (currentLLMType === 'content_ideas') {
+                prompt = `As a growth strategist for hip-hop artist Bo Dean, generate creative content ideas for his online platforms. Bo Dean is known as an "educator-rapper" and is from St. Louis. The user input is: "${promptInput}". Provide 3-5 distinct ideas, explaining why each is suitable for Bo Dean and how it aligns with his brand or growth goals.`;
+            } else if (currentLLMType === 'pitch_blurb') {
+                prompt = `As a growth strategist for hip-hop artist Bo Dean, draft a compelling pitch blurb for his music. Bo Dean is from St. Louis and has an "educator-rapper" persona. The user input is: "${promptInput}". Make the blurb concise, impactful, and highlight unique selling points for playlist curators or media outlets.`;
+            }
+
+            try {
+                let chatHistory = [];
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiKey = ""; // If you want to use models other than gemini-2.0-flash or imagen-3.0-generate-002, provide an API key here. Otherwise, leave this as-is.
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    llmResponseDiv.textContent = text;
+                } else {
+                    llmResponseDiv.textContent = "Error: Could not retrieve a response. Please try again.";
+                }
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                llmResponseDiv.textContent = "An error occurred while generating the response. Please check the console for details.";
+            } finally {
+                loadingSpinner.classList.add('hidden');
+                llmResponseDiv.classList.remove('hidden');
+                generateButton.disabled = false; // Re-enable button
+            }
+        }
+    </script>
+</body>
+</html>
